@@ -30,6 +30,9 @@ class Coords(namedtuple('Coords', 'row col')):
     def midpoint(self, other):
         return (self + other) // 2
 
+    def manhattan(self, other):
+        return abs(self.row - other.row) + abs(self.col - other.col)
+
 
 class Maze:
     def __init__(self, width=15, height=None):
@@ -58,6 +61,9 @@ class Maze:
 
     def in_bounds(self, coords):
         return 0 <= coords.row < self.height and 0 <= coords.col < self.width
+
+    def cell_at(self, coords):
+        return self.grid[coords.row][coords.col]
 
     def set_cell(self, coords, value):
         self.grid[coords.row][coords.col] = value
