@@ -32,32 +32,42 @@ class Coords(namedtuple('Coords', 'row col')):
 
 
 class Maze:
-    def __init__(self, size=15):
-        if size % 2 == 0:
-            raise ValueError('Size must be an odd number')
+    def __init__(self, width=15, height=None):
+        if height is None:
+            height = width
 
-        if size < 0:
-            raise ValueError('Size cannot be negative')
+        if width % 2 == 0:
+            raise ValueError('Width must be an odd number')
 
-        self.grid = [[CellType.WALL] * size for _ in range(size)]
-        self.size = size
+        if width < 0:
+            raise ValueError('Width cannot be negative')
+
+        if height % 2 == 0:
+            raise ValueError('Height must be an odd number')
+
+        if height < 0:
+            raise ValueError('Height cannot be negative')
+
+        self.grid = [[CellType.WALL] * width for _ in range(height)]
+        self.width = width
+        self.height = height
 
     def __repr__(self):
         rows = [' '.join(cell.value for cell in row) for row in self.grid]
         return '\n'.join(rows)
 
     def in_bounds(self, coords):
-        return 0 <= coords.row < self.size and 0 <= coords.col < self.size
+        return 0 <= coords.row < self.height and 0 <= coords.col < self.width
 
     def set_cell(self, coords, value):
         self.grid[coords.row][coords.col] = value
 
     @classmethod
-    def generate(cls, size=None, verbose=False):
-        if size is None:
+    def generate(cls, width=None, height=None, verbose=False):
+        if width is None:
             maze = cls()
         else:
-            maze = cls(size)
+            maze = cls(width, height)
 
         start = Coords(1, 1)
         stack = [start]
