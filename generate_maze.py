@@ -7,7 +7,6 @@ if __name__ == '__main__':
                         help='Size of the generated maze')
     parser.add_argument('--verbose', '-v', action='store_true')
     args = parser.parse_args()
-    print(args)
     if args.size is None:
         maze = Maze.generate(verbose=args.verbose)
     else:
