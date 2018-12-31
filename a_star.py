@@ -1,5 +1,5 @@
 from collections import namedtuple
-from maze import CellType, Coords, Maze
+from maze import CellType, Coords
 
 BaseCandidate = namedtuple('Candidate',
                            'coords parent dist_from_start dist_to_goal')
