@@ -81,14 +81,11 @@ class Maze:
         maze.set_cell(start, CellType.EMPTY)
         while stack:
             current = stack[-1]
-            neighbors = [
-                current + Coords(-2, 0),
-                current + Coords(2, 0),
-                current + Coords(0, -2),
-                current + Coords(0, 2),
-            ]
-            neighbors = [n for n in neighbors
-                         if maze.in_bounds(n) and n not in visited]
+            deltas = [(-2, 0), (2, 0), (0, -2), (0, 2)]
+            neighbors = list(filter(
+                lambda n: maze.in_bounds(n) and n not in visited,
+                [current + Coords(*delta) for delta in deltas],
+            ))
 
             if not neighbors:
                 # backtrack

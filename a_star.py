@@ -34,14 +34,11 @@ def find_path(maze, start, goal):
 
         visited.add(current.coords)
 
-        neighbors = [
-            current.coords + Coords(-1, 0),
-            current.coords + Coords(1, 0),
-            current.coords + Coords(0, -1),
-            current.coords + Coords(0, 1),
-        ]
-        neighbors = [n for n in neighbors
-                     if maze.cell_at(n) == CellType.EMPTY and n not in visited]
+        deltas = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        neighbors = filter(
+           lambda n: maze.cell_at(n) == CellType.EMPTY and n not in visited,
+           [current.coords + Coords(*delta) for delta in deltas]
+        )
 
         for neighbor in neighbors:
             dist_from_start = (current.dist_from_start
